@@ -1,0 +1,218 @@
+{
+  "name": "Social media finder Agent - Sub 1",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9a6474fa-6b51-49f2-9fb8-b326b73c14ed",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Query }}",
+        "options": {
+          "systemMessage": "=## Role\nYou locate and summarise public social media profiles.\n\n## Tools\n- LinkedInFinder → Finds and summarises LinkedIn pages.\n- InstagramFinder → Finds and summarises Instagram pages.\n\n## Behavior\n1. Identify which platform is requested.\n2. Use the matching tool only.\n3. Return the verified URL and a short summary of what is visible on the profile (description, follower scale, tone).\n4. If the query does not specify a social network, ask which one.\n\n## Output\nPlatform name, profile link, and 2-3 sentence summary of what the page conveys."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        288,
+        0
+      ],
+      "id": "76c214bd-608b-4818-ac52-bc41d4270286",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "name": "Instagram",
+        "workflowId": {
+          "__rl": true,
+          "value": "1s0ziO9xpQoQGEMV",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/1s0ziO9xpQoQGEMV",
+          "cachedResultName": "Instagram Finder - Sub 1"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Query"
+          ],
+          "schema": [
+            {
+              "id": "Query",
+              "displayName": "Query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        384,
+        224
+      ],
+      "id": "d45262fd-6856-4c95-9676-ba50906c3c12",
+      "name": "Instagram"
+    },
+    {
+      "parameters": {
+        "name": "LinkedIn",
+        "workflowId": {
+          "__rl": true,
+          "value": "42xO54ZRov9pH31B",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/42xO54ZRov9pH31B",
+          "cachedResultName": "LinkedIn finder - Sub 1"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Query"
+          ],
+          "schema": [
+            {
+              "id": "Query",
+              "displayName": "Query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        512,
+        224
+      ],
+      "id": "63b90db4-1f6f-4436-b5c3-4dac3a4ef1a9",
+      "name": "LinkedIn"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        224
+      ],
+      "id": "ccc1e43d-ae64-4a8d-b9a3-a2da01be5dd1",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "YFdvIE4XQvDULcbp",
+          "name": "OpenAI account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "58fe308b-46ca-4eb4-8555-ad3b3e7d0ec3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5dfb1f8920dd5fb7cf2b014986c627557d4daefd8523a445a71aedaf9be3b593"
+  },
+  "nodeGroups": [],
+  "id": "psxeSHk1sRGbLVQb",
+  "tags": [
+    {
+      "name": "Research agent",
+      "id": "wMesu7UltJnUXQna",
+      "updatedAt": "2026-06-19T17:27:59.897Z",
+      "createdAt": "2026-06-19T17:27:59.897Z"
+    }
+  ]
+}

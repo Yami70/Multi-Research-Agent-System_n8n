@@ -1,0 +1,92 @@
+{
+  "name": "Review Scraper - Sub 1",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Company name"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a1d90fde-ddba-42f6-815b-88a94a35f727",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=ou are a research assistant extracting and summarizing customer sentiment for software products.\n\nSearch for recent **customer reviews** about the company:  \n**\"{{ $json[\"Company name\"] }}\"**  \nPrioritize Trustpilot, G2, and Capterra.\n\nPresent your output in this format using markdown and emojis:\n\n---\n\n# 🆕 {{ $json[\"Company name\"] }}: Customer Feedback Summary\n\n## ⭐ Overall Ratings (if available)\n- G2: ⭐ X.X / 5 (Y reviews)\n- Trustpilot: ⭐ X.X / 5 (Y reviews)\n- Capterra: ⭐ X.X / 5 (Y reviews)\n\n## ✅ Common Pros\n- 🟢 Highlight most-praised features (3–5 points)\n\n## ❌ Common Complaints\n- 🔴 List recurring issues, limitations, or frustrations (3–5 points)\n\n## 💬 Sample User Quotes\n- “Short real quote or paraphrased phrase from a user review.”\n- “Another insightful or quirky user comment.”\n\n## 📊 Overall Sentiment\nLabel as **Positive**, **Mixed**, or **Negative** and explain briefly.\n\n## 👥 Best Suited For\nSuggest who would benefit from this tool (e.g., small teams, power users, marketers, etc.)\n\n## 🔗 Source Links (if available)\nList 2–3 review URLs (Trustpilot, G2, etc.)\n\n---\n\nMake the tone neutral but friendly. Structure clearly. Add formatting and emojis to enhance readability.\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "242dd0e1-2277-4ebb-ac44-613addad7cfe",
+      "name": "Message a model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "YFdvIE4XQvDULcbp",
+          "name": "OpenAI account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "5d628759-65d9-402f-ad17-40651601ea27",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5dfb1f8920dd5fb7cf2b014986c627557d4daefd8523a445a71aedaf9be3b593"
+  },
+  "nodeGroups": [],
+  "id": "JYzIJHGPM2GYGRl5",
+  "tags": [
+    {
+      "name": "Research agent",
+      "id": "wMesu7UltJnUXQna",
+      "updatedAt": "2026-06-19T17:27:59.897Z",
+      "createdAt": "2026-06-19T17:27:59.897Z"
+    }
+  ]
+}

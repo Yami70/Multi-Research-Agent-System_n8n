@@ -1,0 +1,229 @@
+{
+  "name": "Market Research Agent - Sub 1",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "781d6158-340f-4ce8-8883-305fe767ba90",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Query }}",
+        "options": {
+          "systemMessage": "=## Role\nYou perform quick market and competitor research on any topic.\n\n## Tools\n- WebSearch → Broad search for relevant pages or articles.\n- SummariseSite → Summarises a single page.\n- RSS or additional web tools as available.\n\n## Behavior\n1. Start with a general search to identify recent, relevant sources.\n2. Choose the most credible 2-3 results and summarise key insights.\n3. Synthesise patterns, trends, and notable competitors.\n\n## Output\nA 3-part brief:\n- **Overview:** summary of what’s happening\n- **Key trends / competitors**\n- **Sources:** short list of URLs\nKeep it under 300 words.\n\n- Use RSS Read for recent articles or news.\n- Example: for queries about AI → use OpenAI, VentureBeat AI, or Google AI feeds.\nKeep it to 3–5 feeds per execution to stay fast.\n\n\nBear in mind todays date it {{ $now }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        320,
+        0
+      ],
+      "id": "6d4ab567-902d-43b5-847a-4a1873425bb1",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        160,
+        224
+      ],
+      "id": "4b84a326-1b52-4170-9a5a-441eeeec0dc3",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "YFdvIE4XQvDULcbp",
+          "name": "OpenAI account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedReadTool",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        224
+      ],
+      "id": "af86b297-d5b2-41f6-a7dd-04fe50992486",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "name": "Scrape_URL",
+        "workflowId": {
+          "__rl": true,
+          "value": "B8wM2sYEmgcRhCju",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/B8wM2sYEmgcRhCju",
+          "cachedResultName": "Scrape URL - Sub 1"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+            "URL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Query",
+              "displayName": "Query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        224
+      ],
+      "id": "aba6aa1d-ef05-40a6-b159-a6401aad2682",
+      "name": "Scrape URL"
+    },
+    {
+      "parameters": {
+        "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+      "typeVersion": 1,
+      "position": [
+        336,
+        224
+      ],
+      "id": "f488b761-3955-4101-bcaf-5ca317b62395",
+      "name": "Search in Tavily",
+      "credentials": {
+        "tavilyApi": {
+          "id": "6qTAW9tzjHo6OKpz",
+          "name": "Tavily account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape URL": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search in Tavily": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "085abd35-c5dd-4c79-baab-925f9dd97e27",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5dfb1f8920dd5fb7cf2b014986c627557d4daefd8523a445a71aedaf9be3b593"
+  },
+  "nodeGroups": [],
+  "id": "5FDHkpYJ991aDCvM",
+  "tags": [
+    {
+      "name": "Research agent",
+      "id": "wMesu7UltJnUXQna",
+      "updatedAt": "2026-06-19T17:27:59.897Z",
+      "createdAt": "2026-06-19T17:27:59.897Z"
+    }
+  ]
+}

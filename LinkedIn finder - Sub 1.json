@@ -1,0 +1,92 @@
+{
+  "name": "LinkedIn finder - Sub 1",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2dda0e29-a50d-41d4-bcde-64d459b3b24b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Search for the **LinkedIn profile** of \"{{ $json.Query }}\".  \nPrefer company or executive profiles.\n\nReturn a structured summary like this using markdown and emojis:\n\n---\n\n# 💼 LinkedIn Profile: {{ $json.Query }}\n\n## 🔗 Profile Info\n- **Name / Company:** Full LinkedIn name\n- **Headline:** Job title or company description\n- **Location:** City / Country (if available)\n- **Profile Link:** [View on LinkedIn](https://linkedin.com/in/example)\n\n## 🧾 Summary\nA 2–3 sentence description of what the profile conveys — e.g., company mission or professional background.\n\n## 🏢 Company or Role Insights\n- Industry: Tech, Finance, etc.\n- Team Size (if listed): Small (1–10), Mid (11–100), etc.\n- Recent activity or signals: Posts, hiring, launches, etc.\n\n---\n\nUse markdown formatting with emojis. If no valid LinkedIn profile is found, say that clearly.\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "9c5627f2-7b9a-4ee7-aa74-3be615ffbe1d",
+      "name": "Message a model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "YFdvIE4XQvDULcbp",
+          "name": "OpenAI account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "e1eb814e-6441-40fb-bcc2-ff0a0eb36884",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5dfb1f8920dd5fb7cf2b014986c627557d4daefd8523a445a71aedaf9be3b593"
+  },
+  "nodeGroups": [],
+  "id": "42xO54ZRov9pH31B",
+  "tags": [
+    {
+      "name": "Research agent",
+      "id": "wMesu7UltJnUXQna",
+      "updatedAt": "2026-06-19T17:27:59.897Z",
+      "createdAt": "2026-06-19T17:27:59.897Z"
+    }
+  ]
+}

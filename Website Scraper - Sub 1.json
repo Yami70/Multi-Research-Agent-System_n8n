@@ -1,0 +1,92 @@
+{
+  "name": "Website Scraper - Sub 1",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Company name"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1428bba1-8fc1-44c0-89f2-efb4758b8493",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are researching a company's official website.\n\nSearch for the homepage of:  \n**\"{{ $json[\"Company name\"] }}\"**\n\nOnce found, analyze the public content and summarize it in this format using markdown and emojis:\n\n---\n\n# 🏢 {{ $json[\"Company name\"] }}: Company Overview\n\n## 🔍 What They Do\nSummarize their product/service in plain terms (1–2 sentences).\n\n## 🚀 Key Offerings or Features\n- ✅ Feature 1\n- ✅ Feature 2\n- ✅ Feature 3\n\n## 💬 Tone & Messaging\nSummarize the brand voice and positioning (e.g., modern, enterprise, casual, technical, etc.)\n\n## 🌍 Website Link\nShare the official homepage link used for this summary.\n\n---\n\nBe concise but complete. Use clear formatting and emojis. Prioritize information visible on the homepage or About page."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        272,
+        16
+      ],
+      "id": "1074b91e-539a-46b6-b0ff-6512a0e53f0d",
+      "name": "Message a model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "YFdvIE4XQvDULcbp",
+          "name": "OpenAI account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Message a model2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "dff2e66e-4f8f-42c8-9761-683ea0ae67f2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5dfb1f8920dd5fb7cf2b014986c627557d4daefd8523a445a71aedaf9be3b593"
+  },
+  "nodeGroups": [],
+  "id": "HcjGOqntKutSSzCZ",
+  "tags": [
+    {
+      "name": "Research agent",
+      "id": "wMesu7UltJnUXQna",
+      "updatedAt": "2026-06-19T17:27:59.897Z",
+      "createdAt": "2026-06-19T17:27:59.897Z"
+    }
+  ]
+}

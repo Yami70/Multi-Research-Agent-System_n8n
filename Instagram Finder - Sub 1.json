@@ -1,0 +1,92 @@
+{
+  "name": "Instagram Finder - Sub 1",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "19e186b2-0f3a-4a79-9ba1-15e5bcceefdf",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Search for the **official Instagram profile** of \"{{ $json.Query }}\".\n\nOnce found, return a structured profile summary in this format using markdown and emojis:\n\n---\n\n# 📸 Instagram Profile: {{ $json.Query }}\n\n## 👤 Profile Overview\n- **Username:** @username\n- **Full Name:** Company or Person name\n- **Followers:** Approximate count (e.g., 52k+)\n- **Profile Link:** [Visit Profile](https://instagram.com/example)\n\n## 🧾 Bio Summary\nSummarize the tone and content of the bio (e.g., playful, professional, minimalist).\n\n## 🖼️ Content Focus\nDescribe what the profile posts most (e.g., lifestyle, product launches, tips, events).\n\n## 📈 Engagement Insights (if available)\n- Highlight notable patterns or reach (e.g., high story usage, reels, promotions)\n\n---\n\nUse markdown formatting, emojis, and break into readable sections.  \nKeep it concise but informative. If no valid profile is found, clearly say so.\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "fec89d3a-e3d4-40e3-9f59-4b810103343e",
+      "name": "Message a model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "YFdvIE4XQvDULcbp",
+          "name": "OpenAI account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "2e402dc2-0419-4fe7-b899-98d7c9ae4158",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5dfb1f8920dd5fb7cf2b014986c627557d4daefd8523a445a71aedaf9be3b593"
+  },
+  "nodeGroups": [],
+  "id": "1s0ziO9xpQoQGEMV",
+  "tags": [
+    {
+      "name": "Research agent",
+      "id": "wMesu7UltJnUXQna",
+      "updatedAt": "2026-06-19T17:27:59.897Z",
+      "createdAt": "2026-06-19T17:27:59.897Z"
+    }
+  ]
+}
